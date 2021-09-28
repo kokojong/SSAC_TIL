@@ -1,0 +1,147 @@
+# 수업 중
+
+wwdc - 애플이 새로운 sw에 대해 발표?하는거 
+
+HIG - human interface guide  → ui를 구성하는 가이드가 존재한다 찾아보자!
+
+Bundle Identifier - 도메인처럼 가지는 고유의 값(연습할때는 상관 없지만 추후 출시시에 같은게 있다면 안된다)
+
+cmd + shift + 0 → 개발자 문서
+
+asset이 3가지로 (1배, 2배, 3배) 저장되는데 용량에 문제가 생기지 않나요? → 애초에 디바이스에 설치할때 기기에 따라서 배수에 맞는 것을 택함(xcode의 용량은 늘어나지만, app자체의 용량은 그대로)
+
+appDelegate 에서 func application 에서 `sleep` 을 추가해서 그 시간만큼 스플래시 이미지를 보여줄 수 있다.
+
+ - 추가로 공부하기
+
+imageView 의 view 내용을 찾아보기
+
+button 이 ios15가 되면서 바뀐것 찾아보기
+
+entry point 찾아보기(첫 화면을 설정하기) 만약 지웠다면 run시에 검은 화면으로 나오고 debug영역에서 알려줌 → 다시 가져오려면? pdf파일을 참고 or 검색해보기!
+
+# 수업 후
+
+## pdf 파일 보면서 복습하기
+
+wwdc 란? 애플이 주기적으로 (6, 9월 등)에 맞춰서 향후 ios에 대한 설명회? 를 하는것(미리 보는 패치노트..?)
+
+[WWDC 21 키노트 총정리 - Byline Network](https://byline.network/2021/06/08-50/)
+
+ios의 특성 :  페쇄성(보안이라고도 함) / 업데이트(강제로 업데이트, 낮은 기기에서도 업데이트 가능하도록) / 레이아웃 (HIG 가 존재함. SF symbols - 찾아보자) / 하드웨어(gps, 카메라, 각종 센서)
+
+iphone, ipad 의 앱을 만들 수 있는데 iphone용으로 만들면 ipad에서 확대해서 사용이 가능하나 반대는 안된다(아이폰 용으로만 만들면 비용절감을 하고 만들 수 있다)
+
+AppDelegate.swift & SceneDelegate.swift : 앱의 라이프사이클을 담당하는 부분이다. 실행, 종료를 관리하게 된다. ios13 미만에서는 AppDelegate 를 사용하고 13이상에서는 iPadOS가 새로 등장해서 SceneDelegate를 주로 사용함
+
+앱 아이콘의 배수 : 1x, 2x, 3x 가 존재하는데 최신 모델로 올수록 해상도가 올라가서 높은 배수를 사용하게 된다. 3가지를 모두 프로젝트에 넣어도 앱 자체의 용량은 큰 차이가 없다(선택적으로 맞는 디바이스의 아이콘만 받는다)
+단! `pdf` 파일의 경우에는 벡터 형태로 변환해 하나의 리소스로 모든 기종에 대응이 가능하다.(Resizing Preserve Vector Data 를 체크하고, Scale 옵션을 Single Scale 로 변경해서 사용 가능)
+
+LaunchScreen.storyboard : 안드로이드의 스플래시 이미지를 표현한다. 로딩이 되는 속도에 따라 1~2초정도 보여준다. AppDelegate 에서 sleep을 준다면 똑같은 시간으로 설정이 가능하다.
+
+info.plist : 개인정보 보호 및 하드웨어 권한 정보를 가지고 있따. 
+
+## #assignment
+
+### 1. UI 복습하기
+
+- **UILabel** : Text, Color, Font, Alignment, **Lines**, Line Break
+- **UIButton** : Type, Style, Title, SubTitle, Alignment, Title Padding,
+Foreground, Background
+- **UITextField** : Text, Color, Font, Alignment, **Placeholder**, Border Style, Clear Button, Keyboard Type, Return Key, Secure Text Entry
+- **UIImageView** : Image, **Content Mode**
+
+- **UILabel**
+
+`Text` : `plain` 과 `attributed` 가 존재하는데 attributed 는 바로 미리보기가 나오게 된다. 그리고 color나 font를 선택하는 방법이 살짝 다르다.
+
+`color` : 말그대로 색을 바꾼다. 기본적으로 제공하는 색 이외에도 custom을 선택하면 colorPicker가 나와서 원하는 색을 선택 할 수 있다. #ffffff 처럼 hex을 이용해서 표현하려면 color slider에서 rgb를 선택하면 하단에 쓸 수 있다.
+
+`Font` : font, style(두께를 설정), size를 설정 할 수 있다. 추후에 커스텀 폰트를 사용하는 법도 찾아보자!
+
+`Alignment` : hwp 파일이나 doc 파일에서 자주 써본 정렬 방법이다. 전체 label의 영역중에서 어디에 정렬할지 설정한다.
+
+`Lines` : 내부를 몇 줄로 구성할지 정한다. 0으로 설정하면 label의 크기를 벗어나면 ...으로 표현하고 줄 제한이 없다.(아마 제일 자주 쓰지 않을까 싶다)
+
+`Line Break` : ... 을 어디에 표시할지 정한다. `Truncate Head/Middle/Tail` 은 글의 앞 중간 뒤 중에 고르는거고 나머지 clip - 테두리에 걸치는거 까지는 표현?, charcter wrap - 잘릴때 글자 단위로 자름(한국어에서만) 웹에서 css 배울때 한거랑 비슷, word wrap - 잘릴때 단어 단위로 자름(공간이 남아도 단어가 다 못들어가면 지움)
+
+- UIButton
+
+`Type` : 기본적으로 제공하는 여러가지 포맷? 이 존재함. 
+
+`Style` : background 처럼 약간 얇은 배경을 입힌다. background와 같이 사용이 가능하다. 
+
+`Title` : 버튼의 제목
+
+`SubTitle` : 부제목으로 title 아래에 달린다.(optional 하다)
+
+`Alignment` : 부제목의 정렬. button의 영역이 기준이 아니라 title 이 기준이 된다(title의 leading, trailing)
+
+`Title Padding` : 제목과 부제목 사이의 여백
+
+`Foreground` : style 이 plain 이나 default 가 아닌 fill tinted gray 에서만 사용되는데 글자색을 지정함
+
+`Background` : 버튼의 배경색을 지정. view 에서 지정하는 것과 비슷한듯?
+
+- UITextField
+
+`Text` : plain 또는 attributed 로 설정
+
+`Color` : 색 지정(글자색)
+
+`Font` : 글자의 폰트 지정
+
+`Alignment` : 정렬 위치. 영역의 크기를 기준으로 한다
+
+`Placeholder` : 안드로이드의 `hint` 와 동일. text가 비어있다면 회색으로 어떤 정보가 들어갈지 알려준다.
+
+`Border Style` : none, 라인, 베젤, 원형 등이 있다. 특이한건 round 를 선택하면 크기 조절이 가로로만 가능하다.(왜지?)
+
+`Clear Button` : text를 적는 것이다 보니 전체를 지우는 x 표시가 언제 나타나게 할 지 정한다. (언제나 x, 언제나 o, 편집중일때, 편집중이 아닐때)
+
+`Keyboard Type` : 어떤 종류의 키보드를 띄울지 설정한다.(비밀번호는 숫자만 있다거나, 이메일은 @가 있도록 하는 키보드를 띄운다)
+
+`Return Key` : return 버튼인 엔터 버튼이 어떤 모양일지? 정한다(join, done, go 등)
+
+`Secure Text Entry` : 비밀번호 등의 정보를 쓸 때 가리는 옵션
+
+- UIImageView
+
+`image` : 어떤 이미지를 불러올 것인지. 파일의 이름을 쓸수도 있고 옆에 화살표를 누르면 정해진 몇개의 아이콘 중에서 고를 수 있다.
+
+`content mode` :  scale to fill - 원본 이미지의 비율을 무시하고 이미지뷰의 크기에 꽉 채움, aspect fit - 원본의 비율을 유지하면서 가장 최대 크기를 넣음, aspect fill - 원본중에서 그나마 가능한 곳에 맞추고 맞지 않는 부분은 잘림(영화 포스터의 경우 가로가 더 긴 이미지뷰이면 가로는 원본의 가로와 딱 맞지만 더 짧은 쪽은 자른다)
+
+### 2. 배민 UI 구성해보기
+
+일단 완료! 나중에 stackview에 제대로 추가하는거 연습하기
+
+### 3. 다양한 version의 기기와 시뮬레이터의 버전 차이를 알자
+
+ios15가 되면서 uibutton에 생긴 변화 
+
+→ Tinted, Filled and Gray 3가지 버튼으로 세분화 되었다. 이름에서 부터 configuration이 예측 가능해졌다. 또한 `.buttonSize` 에 large medium small등으로 비교적 간단하게 버큰의 크기를 정의할 수 있다. 또, subtitle이 추가되었고, image를 쉽게 추가하고 위치를 정할 수 있다(처음에 배민app UI를 만들때 한 방법)
+
+[Big improvements to UIButton in iOS 15](https://nemecek.be/blog/107/big-improvements-to-uibutton-in-ios-15)
+
+### 4. Entry point
+
+- entry point란 무엇이고 왜 필요할까?
+- 시작점을 나타내는 것이고 다른 언어와 다르게 main() 함수 부분이 viewController 에 존재하지 않는다. 대신에 `@UIApplicationMain` 어노테이션을 통해서 entry point 로 사용되게 한다.
+- entry point가 없다면
+- 시작지점이 명확하지 않기 때문에 실행시에 launchScreen 이후에 검은 화면이 되고 앱이 종료된다.
+- entry point를 삭제 후에 다시 만드는 방법
+- 스토리보드에서 viewController를 선택하고 'is initial view controller' 에 체크해주면 된다.
+
+## #mission
+
+### 1. 최소 버전을 12.0이상으로 하면 빌드시에 오류가 발생. why?
+
+- 이게 맞는지는 모르겠지만 ios13 부터 sceneDelegate가 추가되었기 때문에 12버전과의 호환성이 맞지 않는다고 생각된다. 그래서 13이상으로 해줘야 호환성에 오류가 없는 것 같다.
+
+[Xcode11에서 생성한 프로젝트를 IOS12 이하 버전에서 사용하기](https://hoonstyle.tistory.com/36)
+
+### 2. WWDC 자료
+
+sf symbols - 일일히 모든 아이콘?(심볼)을 만들지 않고 사용할 수 있도록 라이브러리처럼 기본적으로 제공하는 것으로 안드로이드의 vector asset을 만드는 것과 비슷하다고 볼 수 있다 (내가 이해한 거로는)
+
+[개발자와 디자이너를 위한 Custom SF Symbol 만드는 법](https://medium.com/official-podo/%EA%B0%9C%EB%B0%9C%EC%9E%90%EC%99%80-%EB%94%94%EC%9E%90%EC%9D%B4%EB%84%88%EB%A5%BC-%EC%9C%84%ED%95%9C-custom-sf-symbol-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B2%95-374b14448db6)
